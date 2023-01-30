@@ -20,7 +20,7 @@ type OrderResponse struct {
 	InvoiceId    string         `json:"invoiceId"`
 	Items        []ItemResponse `json:"items"`
 	TotalAmount  float32        `json:"totalAmount"`
-	CurrencyUnit string         `json:"currencyUnity"`
+	CurrencyUnit string         `json:"currencyUnit"`
 }
 
 // Items Response
