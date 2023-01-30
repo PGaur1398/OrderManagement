@@ -15,14 +15,14 @@ type Client interface {
 	Update(ctx context.Context, tableName string, updateData interface{}) *gorm.DB
 }
 
-type OrdersRepository interface {
+type OrdersRegistry interface {
 	CreateOrder(ctx context.Context, orderDetails models.Orders) (models.Orders, error)
 	UpdateOrder(ctx context.Context, orderDetails models.Orders) error
 	GetOrderByOrderId(ctx context.Context, orderId string) (models.Orders, error)
 	GetOrdersByStatus(ctx context.Context, orderStatus string) ([]models.Orders, error)
 	DeleteOrder(ctx context.Context, orderId string) error
 }
-type OrderItemsRepository interface {
+type OrderItemsRegistry interface {
 	AddOrderItems(ctx context.Context, orderItems []models.OrderItems) error
 	GetAllItems(ctx context.Context, id uint) ([]models.ItemResponse, error)
 }

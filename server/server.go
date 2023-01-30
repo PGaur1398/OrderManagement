@@ -30,10 +30,10 @@ func (sr server) Start() error {
 	// DB client setup
 	dbClient := repository.NewGORMClient(dbConn)
 	// Setup Repository
-	ordersRespository := repository.NewOrdersRepository(dbClient)
-	orderItemsRepository := repository.NewOrderItemRepository(dbClient)
+	ordersRegistry := repository.NewOrderRegistry(dbClient)
+	orderItemsRegistry := repository.NewOrderItemsRegistry(dbClient)
 	// Setup Services and Handlers
-	routesService := routes.NewRoutesService(ordersRespository, orderItemsRepository)
+	routesService := routes.NewRoutesService(ordersRegistry, orderItemsRegistry)
 	routes.NewRoutesHandler(router, routesService)
 
 	fmt.Println("Listening on Port:", dbConfig.Port)

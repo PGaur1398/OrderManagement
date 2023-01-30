@@ -42,40 +42,40 @@ func GenerateRandomID() string {
 
 // This function Populates Order
 func AddOrderDetails(orderRequest OrderRequest) Orders {
-	var orderDetail Orders
-	orderDetail.OrderID = GenerateRandomID()
+	var orderObj Orders
+	orderObj.OrderID = GenerateRandomID()
 
 	for _, item := range orderRequest.Items {
-		orderDetail.TotalAmount += item.Price
+		orderObj.TotalAmount += item.Price
 	}
-	orderDetail.CurrencyUnit = orderRequest.CurrencyUnit
-	orderDetail.InvoiceID = "N/A"
-	orderDetail.OrderStatus = INVOICE_PENDING
+	orderObj.CurrencyUnit = orderRequest.CurrencyUnit
+	orderObj.InvoiceID = "N/A"
+	orderObj.OrderStatus = INVOICE_PENDING
 	if orderRequest.Status == PAYMENT_SUCCESS {
-		orderDetail.OrderStatus = PAYMENT_SUCCESS
-		orderDetail.InvoiceID = GenerateRandomID()
+		orderObj.OrderStatus = PAYMENT_SUCCESS
+		orderObj.InvoiceID = GenerateRandomID()
 	}
-	return orderDetail
+	return orderObj
 }
 
 // This function Populate Order Items
 func AddItemDetails(id uint, items []ItemRequest) []OrderItems {
-	var orderItems []OrderItems
+	var orderItemsObjs []OrderItems
 	for _, item := range items {
-		orderItems = append(orderItems, OrderItems{
+		orderItemsObjs = append(orderItemsObjs, OrderItems{
 			OrderID:         id,
 			ItemDescription: item.Description,
 			Price:           item.Price,
 			Quantity:        uint(item.Quantity),
 		})
 	}
-	return orderItems
+	return orderItemsObjs
 }
 
 // This function will populate items response
-func AddItemsResponse(orderItems []OrderItems) []ItemResponse {
+func AddItemsResponse(orderItemsObjs []OrderItems) []ItemResponse {
 	var itemsResponse []ItemResponse
-	for _, item := range orderItems {
+	for _, item := range orderItemsObjs {
 		itemsResponse = append(itemsResponse, ItemResponse{
 			Description: item.ItemDescription,
 			Price:       item.Price,

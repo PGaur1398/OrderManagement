@@ -7,14 +7,14 @@ import (
 	"fmt"
 )
 
-type orderItemsRepository struct {
+type orderItemsRegistry struct {
 	client Client
 }
 
 // Create Order Items
-func (oir orderItemsRepository) AddOrderItems(ctx context.Context, orderItems []models.OrderItems) error {
-	for _, orderItem := range orderItems {
-		err := oir.client.Insert(ctx, models.ORDER_ITEMS_TABLE, &orderItem).Error
+func (oir orderItemsRegistry) AddOrderItems(ctx context.Context, orderItemsObjs []models.OrderItems) error {
+	for _, orderItemsObj := range orderItemsObjs {
+		err := oir.client.Insert(ctx, models.ORDER_ITEMS_TABLE, &orderItemsObj).Error
 		if err != nil {
 			return err
 		}
@@ -23,7 +23,7 @@ func (oir orderItemsRepository) AddOrderItems(ctx context.Context, orderItems []
 }
 
 // Returm order Items in sorted order by price
-func (oir orderItemsRepository) GetAllItems(ctx context.Context, id uint) ([]models.ItemResponse, error) {
+func (oir orderItemsRegistry) GetAllItems(ctx context.Context, id uint) ([]models.ItemResponse, error) {
 	var itemsResponse []models.ItemResponse
 	rows, err := oir.client.Query(ctx, GetAllItems, id)
 	if err != nil {
@@ -43,8 +43,8 @@ func (oir orderItemsRepository) GetAllItems(ctx context.Context, id uint) ([]mod
 	return itemsResponse, nil
 }
 
-func NewOrderItemRepository(dbClient Client) orderItemsRepository {
-	return orderItemsRepository{
+func NewOrderItemsRegistry(dbClient Client) orderItemsRegistry {
+	return orderItemsRegistry{
 		client: dbClient,
 	}
 }
